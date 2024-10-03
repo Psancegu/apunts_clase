@@ -358,6 +358,35 @@ public class ClasseString {
         System.out.println("minuscules " + s3.toLowerCase()); // hola
 }}
 ```
+
+### Exemple de correcció d'error amb nextInt i nextLine:
+
+```java
+import java.util.Scanner;
+
+public class prova{
+    public static void main(String[] args) {
+        //Classe Scanner
+        Scanner sc = new Scanner(System.in);
+
+        //Sol·licitar Int
+        System.out.println("Entra un int: ");
+        int numero = sc.nextInt();
+        System.out.println(numero);
+
+        //Netejar el buffer
+        sc.nextLine();
+
+        //Sol·licitar String
+        System.out.println("Entra una String: " );
+        String nombre = sc.nextLine();
+        System.out.println();
+    }
+}
+```
+Sinó netejem el buffer no podem introduir la String.
+
+
 ## 1.8 Expressions
 
 - Una combinació de dades i operadors per calcular altrres dades iaixí obtenir un resultat.

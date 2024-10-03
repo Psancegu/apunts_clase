@@ -228,7 +228,7 @@ public class Main {
 }
 ```
 
-## Classe String (Cadena de Caràcters)
+## 1.7 Classe String (Cadena de Caràcters)
 
 - És de tipus referència.
 
@@ -302,6 +302,105 @@ int i = 0;
 c = str.charAt(i);
 ```
 
-//Diapositiva 41 continuació
- 
+### Comparacions sobre String
 
+- Per sabre si dos cadenes són iguals, utilitzem el mètode equals().
+```java
+String str1 = new String("Hola");
+String str2 = new String("Hola");
+System.out.println(str1.equals(str2));
+//CORRECTE. imprimeix true
+```
+
+Si utilitzem == no funcionaria, ja que estaríem comparant referències i no el contingut.
+
+### Concatenació
+
+- Per a concatenar cadenes s'utilitza l'operador +
+```java
+String str1 = new String("Hola");
+String str2 = new String("Adeu");
+System.out.println(str1 + " "+ str2);
+```
+
+
+### Inmutable 
+
+- Tot objecte de la classe String és inmutable, això vold dir que el seu estat no es pot modificar després de la seva creació.
+
+**Revisar a Clase, no entenc**
+```java
+String str = new String("Hola"); str += "adeu";
+        System.out.println(str);
+
+        StringBuffer sb = new StringBuffer("Hola"); sb.append("adeu");
+        System.out.println(str);
+```
+Funciona en els dos casos.
+
+### Exemple de mètodes de la classe String
+```java
+public class ClasseString {
+    public static void main (String[] args) {
+        String s1 = String.valueOf(1);
+        String s2 = String.valueOf(2);
+        System.out.println("s1+s2=" + s1 + s2); // 12
+        String s3 = new String("Hola");
+        String s4 = "Hola";
+        System.out.println("s3.length=" + s3.length()); // 4
+        System.out.println("s3.majúscules=" + s3.toUpperCase()); // HOLA
+        System.out.println("s3.endsWith(a)=" + s3.endsWith("a")); // true
+        System.out.println("s3.startsWith(a)="+ s3.startsWith("a")); // false
+        System.out.println("substring(1,2)=" + s3.substring(1,2)); // o
+        System.out.println("s3 equals s4=" + s3.equals(s4)); // true
+        System.out.println("s3 == s4=" + (s3 == s4)); // false
+        System.out.println("Caràcter a la posició 0: "+ s3.charAt(0));// H
+        System.out.println("minuscules " + s3.toLowerCase()); // hola
+}}
+```
+## 1.8 Expressions
+
+- Una combinació de dades i operadors per calcular altrres dades iaixí obtenir un resultat.
+
+## 1.9 Sentencies Elementals
+
+- Instruccions, formen part sempre d'un bloc, sentències.
+
+- Acaben en:
+    - Assignacions: 
+        ```java
+        int a = b * c
+        ```
+    - Crides a mètodes:
+        ```java
+        import java.util.Scanner
+        Scanner teclat = new Scanner(System.in);
+        nomVariable = teclat.nextInt()
+        ```
+    - Els comentaris a Java:
+        ```java
+        //Comentari d'una línia
+
+        /* 
+        * Comentari
+        * de
+        * més línies.
+        */ 
+        ```
+
+- Conversior de Graus Fahrenheit a graus Celsius
+```java
+import java.util.Scanner;
+
+public class ConversioGraus {
+    public static void main (String[] args) {
+        double grausF, grausC;
+        final double CONVERSOR = 5.0 / 9.0;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Entra els graus Fahrenheit: ");
+        grausF = sc.nextDouble();
+        grausC = CONVERSOR * (grausF - 32.0);
+        System.out.println(grausF + " graus Fahrenheit son " + grausC + " graus Celsius");
+}
+}
+```

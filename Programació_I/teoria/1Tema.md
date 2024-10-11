@@ -302,6 +302,28 @@ int i = 0;
 c = str.charAt(i);
 ```
 
+- Podem consultar Amb que acaba i amv què comença amb:
+```java
+message.endsWith("!!") ==  True or False
+message.startsWith("!!") == True or False
+```
+
+- També podem saber l'index d'una lletra.
+```java
+message = "Hello"
+message.indexOf("H"); // 0
+message.indexOf("sky"); //-1
+```
+
+-També existeix el replace de python.
+```java
+message.replace(target, replacement);
+```
+
+- També toLowerCase() and toUpperCase()
+
+NO canvi el contignut de la String.
+
 ### Comparacions sobre String
 
 - Per sabre si dos cadenes són iguals, utilitzem el mètode equals().

@@ -79,6 +79,7 @@ La seva complexitat es pot deduir fent aquestes dues observacions:
 
 $ x/y = y \cdot q + r $
 
+```python
 def div(x,y):
     import math
     if x<=0:
@@ -94,8 +95,12 @@ def div(x,y):
         r = r-y          
         q = q+1          #aquí és on anem augmentant el quocient
     return q,r
+```
+
 
 COmplexitat O(n²)
 
 
 # ALGORISMES NUMÈRICS PART 2
+
+

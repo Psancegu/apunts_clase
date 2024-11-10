@@ -57,6 +57,7 @@ La seva complextitat és O(n) perquè fem un nombre de sumes de dos dígits que 
 ![Multiplicació](2.png)
 
 També està l'algorisme d'Al Khwarizmi.
+
 ![Multiplicació](2.1.png)
 
 Que traslladat a algorisme recursiu és:

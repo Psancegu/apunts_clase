@@ -99,3 +99,213 @@ Compta els passos aproximats que fa un algorisme per comptar la seva comlexitat.
 
 En aquest cas lal Gran 0 agafa sempre el pitjor dels casos, si és $ 2n^{3} + 5n^{2} + 10n + 10 $ agafa $ O(n^{3}) $
 
+$ O(n!) > O(n^2) > O(n \cdot log(n)) > O(n) > O(log(n)) > 0(1) $
+
+**Observacions:**
+
+- Qualsevol Factorial és inútil a Partir de n = 20
+- Els algorisme de 2^n son inútils a partir de n = 40
+- Els alforismes n^2 comencen a ser costosos a partir de n = 10000 i inútils a n = 1 M
+- Els algorismes n i n log(n) poden arribar fins a 1000 M.
+- Els algorismes log(n) són útils per a qualsevol n.
+
+
+## 3. ARITMÈTICA BÀSICA
+
+### 3.1 PRELIMINARS
+
+- Un canvi de base no afecta a la "mida" del nombre. Una complexitat serveix per a totes les altres bases.
+
+### SUMA
+- La suma de tres nombres amb n dígits, només ens pot donar un nombe màxim amb n+1 digits, per bases b >= 2.
+
+La seva complextitat és O(n) perquè fem un nombre de sumes de dos dígits que és proporcional a la mida del nombre.
+
+### MULTIPLICACIÓ
+![Multiplicació](2.png)
+
+També està l'algorisme d'Al Khwarizmi.
+
+![Multiplicació](2.1.png)
+
+Que traslladat a algorisme recursiu és:
+```python
+def mult(x,y):
+    import math
+    if y==0 or x==0:              # en aquest cas arribem a 0
+        return 0
+    z = mult(math.floor(x/2),y)   # fem les crides reduint x
+    if x%2 == 0:
+        return 2*z                # en el retorn és quan doblem y  
+    else:
+        return y+2*z              # només si és senar el sumem
+print(mult(11,13))
+```
+La seva complexitat es pot deduir fent aquestes dues observacions:
+- L'algorisme s'acab després de n crides recursives. 
+- A cada crida recusriva fem n operacions.
+- O(n^2)
+
+### Divisió
+
+$ x/y = y \cdot q + r $
+
+```python
+def div(x,y):
+    import math
+    if x<=0:
+        return 0,0
+    if y==1: 
+        return x,0
+    q,r = div(math.floor(x/2),y)
+    q = 2*q              #desfem la divisió per 2
+    r = 2*r              #desfem la divisió per 2 
+    if x%2 != 0:
+        r += 1           #recuperem el que hem perdut amb el floor
+    if r >= y:
+        r = r-y          
+        q = q+1          #aquí és on anem augmentant el quocient
+    return q,r
+```
+
+
+Complexitat O(n²)
+
+
+## ALGORISMES NUMÈRICS 2
+
+### ARITMÈTICA MODULAR
+
+**Com enviar un missatge secret: **
+1. p=11 i q=3 (Escollit 2 nombres primers) 
+2. n = pq , n = 11*3 = 33 
+3. m = (p-1)(q-1) ; 2*10 = 20.
+4. ed % m = 1 ; 3*7 % 20 = 1
+5. Clau Pública (n,e) i Clau Privada (n,d) ; (33,3)(33,7)
+
+6. Encriptar Missatge M = 14 --> $ M^{e} \space \% \space n =  14^{3} \space \% \space 33 = 5 $
+7. El missatge encriptat s'envia a l'Alice i resultat = $ C^{d} \space \% \space n = 5^{7} \space \% \space 33 = 14$
+
+
+**Definció de Mòdul de N**
+
+$ x \space \% \space n $
+
+Exemple: $ 12 \space \% \space 7 = 5$
+
+Això ens permet definir un equivalència (congruència) entre números.
+
+$ x \text{ és congruent amb } y <-> N dvideix (x-y) $
+
+* O(n^2)
+
+#### SUMA MODULAR (a + b % n)
+
+$ (a + b) \space \% \space n = (a \space \% \space n  + b \space \% \space n) \space \% n$
+
+A més, sabem que si dos nombres estan el rang [0, N-1] (a % N i b % N ho estan), la seva suma està en el rang [0, 2(N-1)] (que només és un bit més). 
+
+Complexitat: O(n)
+
+#### MULTIPLICACIÓ MODULAR
+
+$ (a * b) \space \% \space n = (a \space \% \space n  * b \space \% \space n) \space \% n$
+
+A més, sabem que el producte pot ser fins (N-1)^2 i que això es pot representar amb 2n bits. Per transformar el resultat hem de dividir per N i calcular el mòdul (amb complexitat O(n^2))
+
+
+#### DIVISIÓ MODULAR 
+No és tan simple però té una complexitat de O(n^3).
+
+#### EXPONENCIACIÓ MODULAR
+
+x^y amb operadors molt grans necessiten molt bits per emmagatzemar, en canvo només necessiten log(n) digits per representar-se.
+
+![ExpMod](ExpMod.png)
+
+
+Exemple d'Algorisme Recursiu:
+```python
+def modexp(x,y,N):
+    import math
+    if y == 0:
+        return 1    # cas base x^0 dona 1
+    z = modexp(x, math.floor(y/2), N)  
+                  # dividim la potència per 2 fins arribar al cas base  
+    if y%2 == 0:
+        return (z**2)%N
+                # anem fent les potències de 2 mòdul N
+    else:
+        return (x*(z**2))%N
+                # la y inicial no és una potència de 2, 
+                # cal multiplicar per x, també mòdul N
+```
+
+
+Exemple d'Algorisme No recursiu:
+
+```python
+def exponenciacion_modular(base, exponente, modulo):
+    # Inicializamos el resultado en 1
+    resultado = 1
+    
+    # Aseguramos que la base esté dentro del rango del módulo
+    base = base % modulo
+    
+    # Mientras el exponente sea mayor que 0
+    while exponente > 0:
+        # Si el bit menos significativo de 'exponente' es 1, multiplicamos el resultado por la base
+        if exponente % 2 == 1:
+            resultado = (resultado * base) % modulo
+        
+        # Cuadramos la base (base^2) y aplicamos el módulo
+        base = (base * base) % modulo
+        
+        # Dividimos el exponente entre 2 (desplazamiento a la derecha)
+        exponente //= 2
+    
+    return resultado
+```
+
+### NOMBRES PRIMERS
+
+Factorització és dura però primeritat és fàcil.
+
+**Petit teorema de Fermat**
+Si p és primer, llavors per a qualsevol enter a, 1 <= a < p, es compleix que a^(p-1) % p = 1. 
+
+```python
+import random
+def fermat(num, test_count):
+    if num == 1:
+        return False
+    for x in range(test_count):
+        val = random.randint(1, num-1)     
+        if pow(val, num-1) % num != 1:      
+            return False                   
+    return True
+fermat(41652,10)
+> True
+```
+
+- El problema és que només podem saber uns quants casos, no tots!
+- No diu què passa quan N no és primer.
+
+Complexitat O(n^3)
+
+Per Tant, els alfgorismes de més alta complexitat en un procés criptogràfic tenen O(n^4).
+
+
+## ALGORISMES DE TEXT
+
+### ALGORISME INGÈNU PASSAR PER TOTS I BUSCAR LA PARAULA.
+
+- No és eficient.
+- Complexitat O(n*m)
+
+### ALGORISME DE HORSPOOL
+
+Aquest Algorisme preprocessa el patró i fa salts segons la distància assignada.
+
+Complexitat O(n*m), que tot i ser igual és més eficient que el de força bruta.
+
